@@ -23,7 +23,7 @@ FROM b.gcr.io/tensorflow/tensorflow:latest
 WORKDIR "/notebooks"
 
 RUN apt-get -qq update && apt-get install -y zip wget python3-pip nfs-common \
-	&& pip3 install --upgrade pip && pip3 install requests jinja2 tornado 'notebook>=4.1' terminado \
+	&& pip3 install --upgrade pip && pip3 install requests jinja2 \
 	&& pip install --upgrade numpy \
 	&& pip install torch torchvision \
 	&& curl -O https://storage.googleapis.com/download.tensorflow.org/models/inception5h.zip \
