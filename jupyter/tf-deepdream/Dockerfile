@@ -18,22 +18,17 @@
 # TODO: the JupyterHub singleuser script has moved recently in a pre-release version
 #       this will require a pip3 install JupyterHub which is totally overkill for one script
 
-FROM b.gcr.io/tensorflow/tensorflow:latest
+FROM gcr.io/tensorflow/tensorflow-sdca:latest
 
 WORKDIR "/notebooks"
 
 RUN apt-get -qq update && apt-get install -y zip wget python3-pip nfs-common \
-	&& pip3 install --upgrade pip && pip3 install requests jinja2 \
+	&& pip install --upgrade pip\
+	&& pip install scikit-image\
 	&& pip install --upgrade numpy \
-	&& pip install torch torchvision \
-	&& curl -O https://storage.googleapis.com/download.tensorflow.org/models/inception5h.zip \
-	&& unzip -qo inception5h.zip \
-	&& rm inception5h.zip \
     && mkdir -p /mnt/notebooks \
 	&& wget -q https://raw.githubusercontent.com/tensorflow/tensorflow/master/tensorflow/examples/tutorials/deepdream/deepdream.ipynb \
     && wget -q https://raw.githubusercontent.com/tensorflow/tensorflow/master/tensorflow/examples/tutorials/deepdream/pilatus800.jpg \
-	&& wget -q https://goo.gl/CFhAZF -O /usr/local/bin/jupyterhub-singleuser \
-	&& chmod 755 /usr/local/bin/jupyterhub-singleuser \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 	
 
