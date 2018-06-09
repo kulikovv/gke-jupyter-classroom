@@ -22,15 +22,16 @@ FROM gcr.io/tensorflow/tensorflow-sdca:latest
 
 WORKDIR "/notebooks"
 
-RUN apt-get -qq update && apt-get install -y zip wget python3-pip nfs-common \
-	&& pip install --upgrade pip\
-	&& pip install scikit-image\
+RUN apt-get -qq update && apt-get install -y python3-pip
+RUN apt-get install -y zip wget python3-pip nfs-common \
+	&& pip3 install --upgrade pip&& pip3 install -U requests jinja2 'tornado>=4.0.0,<4.5.0' terminado \	
+	&& python3 -m pip install jupyterhub \
 	&& pip install --upgrade numpy \
     && mkdir -p /mnt/notebooks \
 	&& wget -q https://raw.githubusercontent.com/tensorflow/tensorflow/master/tensorflow/examples/tutorials/deepdream/deepdream.ipynb \
     && wget -q https://raw.githubusercontent.com/tensorflow/tensorflow/master/tensorflow/examples/tutorials/deepdream/pilatus800.jpg \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-	
+RUN pip3 install 'notebook>=4.0.0,<5.0.0'
 
 COPY jupyter_notebook_config.py /root/.jupyter/
 COPY docker-entrypoint.sh /docker-entrypoint.sh

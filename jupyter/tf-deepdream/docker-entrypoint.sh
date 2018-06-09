@@ -24,7 +24,6 @@ if [ -n "${NOTEBOOK_DIR:+x}" ]; then
     fi
 fi
 if [ -z ${BYPASS_SINGLE_USER} ]; then
-  echo "Juphub"
   exec sh -c "jupyterhub-singleuser \
     --port=8888 \
     --ip=0.0.0.0 \
@@ -36,6 +35,5 @@ if [ -z ${BYPASS_SINGLE_USER} ]; then
     ${notebook_arg} \
     $@ 2>&1 | tee /var/log/jupyter.log"
 else
-  echo "JP_server"
   exec sh -c "jupyter notebook ${notebook_arg} $@"
 fi
